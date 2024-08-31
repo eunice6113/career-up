@@ -1,19 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+// career-up/apps/shell/src/App.tsx
 
-import './index.css'
+import React from "react";
+import Router from "./router";
 
-const App = () => (
-  <div className="container">
-    <div>Name: shell</div>
-    <div>Framework: react</div>
-    <div>Language: TypeScript</div>
-    <div>CSS: Empty CSS</div>
-  </div>
-)
-const rootElement = document.getElementById('app')
-if (!rootElement) throw new Error('Failed to find the root element')
+const App = () => <Router />;
 
-const root = ReactDOM.createRoot(rootElement as HTMLElement)
-
-root.render(<App />)
+export default App;
