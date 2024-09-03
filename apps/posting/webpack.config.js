@@ -61,6 +61,7 @@ module.exports = (_, argv) => ({
   },
 
   plugins: [
+    new Dotenv(),
     new ModuleFederationPlugin({
       name: "posting",
       filename: "remoteEntry.js",
@@ -84,11 +85,13 @@ module.exports = (_, argv) => ({
         "@career-up/ui-kit": {
           singleton: true,
         },
+        "@auth0/auth0-react": {
+          singleton: true,
+        },
       },
     }),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
     }),
-    new Dotenv()
   ],
 });
