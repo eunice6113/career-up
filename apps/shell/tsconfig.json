@@ -22,7 +22,9 @@
     "incremental": true, // Enable incremental compilation by reading/writing information from prior compilations to a file on disk
     "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement
     "paths": {
-      "posting/injector": ["../posting/src/injector.tsx"] // Path mapping
+      "posting/injector": ["../posting/src/injector.tsx"], // Path mapping
+      "edu/injector": ["../edu/src/injector.tsx"],
+      "network/injector": ["../network/src/injector.tsx"]
     },
   },
   "include": [

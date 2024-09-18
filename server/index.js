@@ -5,8 +5,6 @@ const server = jsonServer.create();
 const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 
-const AUTH0_DOMAIN = "dev-vcrmf0xuep020tri.us.auth0.com";
-
 server.use(middlewares);
 server.use(async (req, res, next) => {
   if (await isAuthorized(req)) {
@@ -15,9 +13,26 @@ server.use(async (req, res, next) => {
     res.sendStatus(401);
   }
 });
-
 server.get("/user", (req, res) => {
-  res.jsonp({ ...req.user, view_count: 249, update_count: 100 });
+  res.jsonp({
+    ...req.user,
+    view_count: 249,
+    update_count: 100,
+    courses: [
+      { courseId: 1, done: true },
+      { courseId: 4, done: false },
+    ],
+  });
+});
+
+server.get("/my-network", (req, res) => {
+  res.jsonp({
+    connectionCount: 811,
+    contactCount: 3724,
+    eventCount: 0,
+    pageCount: 0,
+    user: req.user,
+  });
 });
 
 server.use(jsonServer.bodyParser);
@@ -28,6 +43,7 @@ server.post("/posts", (req, res, next) => {
     email: req.user.email,
     picture: req.user.picture,
   };
+  // Continue to JSON Server router
   next();
 });
 
@@ -40,11 +56,14 @@ async function isAuthorized(req) {
   try {
     const Authorization = req.headers.authorization;
 
-    const res = await fetch(`https://${AUTH0_DOMAIN}/userinfo`, {
-      headers: {
-        Authorization,
-      },
-    });
+    const res = await fetch(
+      "https://dev-vcrmf0xuep020tri.us.auth0.com/userinfo",
+      {
+        headers: {
+          Authorization,
+        },
+      }
+    );
 
     const json = await res.json();
 
@@ -52,6 +71,7 @@ async function isAuthorized(req) {
 
     return true;
   } catch (e) {
+    console.log(e);
     return false;
   }
 }
